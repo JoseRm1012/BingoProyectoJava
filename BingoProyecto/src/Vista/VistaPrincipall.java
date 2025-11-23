@@ -124,6 +124,11 @@ private void ajustarAlturasTablas() {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        mnlNuevoJuego = new javax.swing.JMenuItem();
+        mnlGenerarCartones = new javax.swing.JMenuItem();
+        mnlVenderCartones = new javax.swing.JMenuItem();
+        mnlComenzarBingo = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
         jPanel18.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -226,7 +231,7 @@ private void ajustarAlturasTablas() {
                 {null, null, null, null, null}
             },
             new String [] {
-                "", "", "", "", ""
+                "B", "I", "N", "G", "O"
             }
         ));
         jScrollPane11.setViewportView(tblCarton1);
@@ -290,7 +295,7 @@ private void ajustarAlturasTablas() {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "B", "I", "N", "G", "O"
             }
         ));
         jScrollPane13.setViewportView(tblCarton2);
@@ -340,7 +345,7 @@ private void ajustarAlturasTablas() {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "B", "I", "N", "G", "O"
             }
         ));
         jScrollPane15.setViewportView(tblCarton3);
@@ -403,7 +408,7 @@ private void ajustarAlturasTablas() {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "B", "I", "N", "G", "O"
             }
         ));
         jScrollPane16.setViewportView(tblCarton4);
@@ -451,7 +456,7 @@ private void ajustarAlturasTablas() {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+                "B", "I", "N", "G", "O"
             }
         ));
         jScrollPane18.setViewportView(tblCarton5);
@@ -621,11 +626,47 @@ private void ajustarAlturasTablas() {
                 .addGap(30, 30, 30))
         );
 
-        jMenu1.setText("File");
+        jMenu1.setText("Archivo");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Tico Bingo");
+
+        mnlNuevoJuego.setText("Nuevo Juego");
+        mnlNuevoJuego.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnlNuevoJuegoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnlNuevoJuego);
+
+        mnlGenerarCartones.setText("Generar Cartones");
+        mnlGenerarCartones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnlGenerarCartonesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnlGenerarCartones);
+
+        mnlVenderCartones.setText("Vender Cartones");
+        mnlVenderCartones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnlVenderCartonesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnlVenderCartones);
+
+        mnlComenzarBingo.setText("Comenzar Bingo");
+        mnlComenzarBingo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnlComenzarBingoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnlComenzarBingo);
+
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Ayuda");
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -671,6 +712,22 @@ private void ajustarAlturasTablas() {
         controlador.nuevaBolita();
     }//GEN-LAST:event_btnNuevaBolita2ActionPerformed
 
+    private void mnlNuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlNuevoJuegoActionPerformed
+        btnNuevoJuego.doClick();
+    }//GEN-LAST:event_mnlNuevoJuegoActionPerformed
+
+    private void mnlVenderCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlVenderCartonesActionPerformed
+          btnVenderCartones.doClick();
+    }//GEN-LAST:event_mnlVenderCartonesActionPerformed
+
+    private void mnlGenerarCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlGenerarCartonesActionPerformed
+       btnGenerarCartones.doClick();
+    }//GEN-LAST:event_mnlGenerarCartonesActionPerformed
+
+    private void mnlComenzarBingoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlComenzarBingoActionPerformed
+         btnComenzarJuego.doClick();
+    }//GEN-LAST:event_mnlComenzarBingoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -702,6 +759,7 @@ private void ajustarAlturasTablas() {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -720,6 +778,10 @@ private void ajustarAlturasTablas() {
     private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JSeparator jSeparator5;
     public javax.swing.JLabel lblBolitaTitulo;
+    private javax.swing.JMenuItem mnlComenzarBingo;
+    private javax.swing.JMenuItem mnlGenerarCartones;
+    private javax.swing.JMenuItem mnlNuevoJuego;
+    private javax.swing.JMenuItem mnlVenderCartones;
     public javax.swing.JTable tblCarton1;
     public javax.swing.JTable tblCarton2;
     public javax.swing.JTable tblCarton3;
