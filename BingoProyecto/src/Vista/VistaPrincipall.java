@@ -237,6 +237,11 @@ private void ajustarAlturasTablas() {
         jScrollPane11.setViewportView(tblCarton1);
 
         btnDatosCliente1.setText("Datos del Ciente");
+        btnDatosCliente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatosCliente1ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Estado");
 
@@ -281,6 +286,11 @@ private void ajustarAlturasTablas() {
         jLabel8.setText("Estado");
 
         btnDatosCliente2.setText("Datos del Ciente");
+        btnDatosCliente2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatosCliente2ActionPerformed(evt);
+            }
+        });
 
         txtEstado2.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         txtEstado2.setForeground(new java.awt.Color(0, 51, 255));
@@ -357,6 +367,11 @@ private void ajustarAlturasTablas() {
         txtEstado3.setText("Vendido");
 
         btnDatosCliente3.setText("Datos del Ciente");
+        btnDatosCliente3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatosCliente3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -394,6 +409,11 @@ private void ajustarAlturasTablas() {
         jLabel10.setText("Estado");
 
         btnDatosCliente4.setText("Datos del Ciente");
+        btnDatosCliente4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatosCliente4ActionPerformed(evt);
+            }
+        });
 
         txtEstado4.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         txtEstado4.setForeground(new java.awt.Color(0, 51, 255));
@@ -464,6 +484,11 @@ private void ajustarAlturasTablas() {
         jLabel15.setText("Estado");
 
         btnDatosCliente5.setText("Datos del Ciente");
+        btnDatosCliente5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDatosCliente5ActionPerformed(evt);
+            }
+        });
 
         txtEstado5.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         txtEstado5.setForeground(new java.awt.Color(0, 51, 255));
@@ -536,26 +561,21 @@ private void ajustarAlturasTablas() {
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnVenderCartones, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnComenzarJuego, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnNuevoJuego, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnGenerarCartones, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(14, 14, 14))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                                .addComponent(lblBolitaTitulo)
-                                .addGap(24, 24, 24)))))
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnVenderCartones, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnComenzarJuego, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnNuevoJuego, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnGenerarCartones, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                        .addComponent(lblBolitaTitulo)
+                        .addGap(24, 24, 24)))
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -701,11 +721,12 @@ private void ajustarAlturasTablas() {
     }//GEN-LAST:event_btnGenerarCartonesActionPerformed
 
     private void btnVenderCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderCartonesActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(this, "Vender cartones se implementa después.");
+        controlador.venderCarton();
     }//GEN-LAST:event_btnVenderCartonesActionPerformed
 
     private void btnComenzarJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComenzarJuegoActionPerformed
        controlador.comenzarBingo();;
+       
     }//GEN-LAST:event_btnComenzarJuegoActionPerformed
 
     private void btnNuevaBolita2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaBolita2ActionPerformed
@@ -718,6 +739,7 @@ private void ajustarAlturasTablas() {
 
     private void mnlVenderCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlVenderCartonesActionPerformed
           btnVenderCartones.doClick();
+          controlador.venderCarton();
     }//GEN-LAST:event_mnlVenderCartonesActionPerformed
 
     private void mnlGenerarCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlGenerarCartonesActionPerformed
@@ -727,6 +749,26 @@ private void ajustarAlturasTablas() {
     private void mnlComenzarBingoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlComenzarBingoActionPerformed
          btnComenzarJuego.doClick();
     }//GEN-LAST:event_mnlComenzarBingoActionPerformed
+
+    private void btnDatosCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente1ActionPerformed
+        controlador.mostrarDatosCliente(1);
+    }//GEN-LAST:event_btnDatosCliente1ActionPerformed
+
+    private void btnDatosCliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente3ActionPerformed
+        controlador.mostrarDatosCliente(2);
+    }//GEN-LAST:event_btnDatosCliente3ActionPerformed
+
+    private void btnDatosCliente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente2ActionPerformed
+        controlador.mostrarDatosCliente(3);
+    }//GEN-LAST:event_btnDatosCliente2ActionPerformed
+
+    private void btnDatosCliente4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente4ActionPerformed
+        controlador.mostrarDatosCliente(4);
+    }//GEN-LAST:event_btnDatosCliente4ActionPerformed
+
+    private void btnDatosCliente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente5ActionPerformed
+        controlador.mostrarDatosCliente(5);
+    }//GEN-LAST:event_btnDatosCliente5ActionPerformed
 
     /**
      * @param args the command line arguments

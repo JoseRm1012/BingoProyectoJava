@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package logica;
+import Vista.DlgDatosCliente;
 import Vista.VistaPrincipall;
 import clases.Carton;
 import clases.Tombola;
@@ -13,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import Vista.DlgVenderCarton;
+import clases.Persona;
 
 public class ControladorJuego {
 
@@ -21,10 +24,84 @@ public class ControladorJuego {
     private final Tombola tombola = new Tombola();
     private boolean juegoEnCurso = false;
     private long inicioJuegoMs;
+    private final ArrayList<Persona> personas = new ArrayList<>();
 
     public ControladorJuego(VistaPrincipall vista) {
         this.vista = vista;
     }
+    
+    // ========= VENDER CARTÓN =========
+public void venderCarton() {
+    if (cartones.isEmpty()) {
+        JOptionPane.showMessageDialog(vista, "Primero genere los cartones.");
+        return;
+    }
+
+    DlgVenderCarton dlg = new DlgVenderCarton(vista, true, cartones.size());
+    dlg.setVisible(true);
+
+    if (!dlg.isAceptado()) {
+        return; // canceló
+    }
+
+    Persona p = dlg.getPersona();
+    if (p == null) {
+        return;
+    }
+
+    int num = p.getNumeroCarton();
+
+    if (num < 1 || num > cartones.size()) {
+        JOptionPane.showMessageDialog(vista, "Número de cartón inválido.");
+        return;
+    }
+
+    Carton carton = cartones.get(num - 1);
+
+    if (carton.isVendido()) {
+        JOptionPane.showMessageDialog(vista, "Ese cartón ya está vendido.");
+        return;
+    }
+
+    // guardar la persona y marcar cartón como vendido
+    carton.setComprador(p);
+    personas.add(p);
+    marcarCartonComoVendido(num);
+}
+// ========= MOSTRAR DATOS DEL CLIENTE =========
+public void mostrarDatosCliente(int numCarton) {
+    if (cartones.isEmpty()) {
+        JOptionPane.showMessageDialog(vista, "Primero genere y venda cartones.");
+        return;
+    }
+
+    if (numCarton < 1 || numCarton > cartones.size()) {
+        JOptionPane.showMessageDialog(vista, "Número de cartón inválido.");
+        return;
+    }
+
+    Carton carton = cartones.get(numCarton - 1);
+    Persona comprador = carton.getComprador();
+
+    if (comprador == null) {
+        JOptionPane.showMessageDialog(vista, "Este cartón aún no ha sido vendido.");
+        return;
+    }
+
+    DlgDatosCliente dlg = new DlgDatosCliente(vista, true);
+    dlg.setDatosCliente(comprador);   // 👈 solo pasa la persona
+    dlg.setVisible(true);
+}
+
+private void marcarCartonComoVendido(int num) {
+    switch (num) {
+        case 1 -> vista.txtEstado1.setText("VENDIDO");
+        case 2 -> vista.txtEstado2.setText("VENDIDO");
+        case 3 -> vista.txtEstado3.setText("VENDIDO");
+        case 4 -> vista.txtEstado4.setText("VENDIDO");
+        case 5 -> vista.txtEstado5.setText("VENDIDO");
+    }
+}
 
     // ========= NUEVO JUEGO =========
     public void nuevoJuego() {

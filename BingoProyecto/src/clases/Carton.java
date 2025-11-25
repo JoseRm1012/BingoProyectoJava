@@ -6,17 +6,19 @@ package clases;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import clases.Persona;   
 
 /**
  *
  * @author QXC
  */
 public class Carton  {
-     private final int idCarton;
+       private final int idCarton;
     private final int[][] numeros = new int[5][5];
     private final boolean[][] marcados = new boolean[5][5];
     private boolean ganador;
     private String tipoJugada;
+    private Persona comprador;
 
     public Carton(int idCarton) {
         this.idCarton = idCarton;
@@ -37,8 +39,21 @@ public class Carton  {
     public String getTipoJugada() {
         return tipoJugada;
     }
+    
+      // getters/setters del comprador
+    public Persona getComprador() {
+        return comprador;
+    }
 
-    // 👇 NUEVO: para que el renderer pueda consultar si una casilla está marcada
+    public void setComprador(Persona comprador) {
+        this.comprador = comprador;
+    }
+
+    public boolean isVendido() {
+        return comprador != null;
+    }
+
+    // NUEVO: para que el renderer pueda consultar si una casilla está marcada
     public boolean isMarcado(int fila, int col) {
         return marcados[fila][col];
     }
