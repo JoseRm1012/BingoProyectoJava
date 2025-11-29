@@ -129,6 +129,8 @@ private void ajustarAlturasTablas() {
         mnlVenderCartones = new javax.swing.JMenuItem();
         mnlComenzarBingo = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        mnlSalir = new javax.swing.JMenuItem();
+        mnlInstrucciones = new javax.swing.JMenuItem();
 
         jPanel18.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -647,6 +649,15 @@ private void ajustarAlturasTablas() {
         );
 
         jMenu1.setText("Archivo");
+        
+        mnlSalir.setText("Salir");
+        mnlSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnlSalirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnlSalir);
+        
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Tico Bingo");
@@ -686,6 +697,15 @@ private void ajustarAlturasTablas() {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Ayuda");
+        
+        mnlInstrucciones.setText("Instrucciones");
+        mnlInstrucciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnlInstruccionesActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnlInstrucciones);
+        
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -770,6 +790,25 @@ private void ajustarAlturasTablas() {
         controlador.mostrarDatosCliente(5);
     }//GEN-LAST:event_btnDatosCliente5ActionPerformed
 
+    private void mnlSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mnlSalirActionPerformed
+
+    private void mnlInstruccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlInstruccionesActionPerformed
+        javax.swing.JOptionPane.showMessageDialog(this,
+            "INSTRUCCIONES DEL JUEGO TICO BINGO\n\n" +
+            "1. Hacer clic en 'Nuevo Juego' para iniciar\n" +
+            "2. Generar los cartones con 'Generar Cartones'\n" +
+            "3. Vender los cartones a los jugadores\n" +
+            "4. Hacer clic en 'Comenzar Bingo' para iniciar el juego\n" +
+            "5. El juego generará números aleatoriamente\n" +
+            "6. Marque los números en sus cartones\n" +
+            "7. El primer jugador en completar un patrón gana\n\n" +
+            "¡Que disfrute del juego!",
+            "Instrucciones",
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_mnlInstruccionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -803,6 +842,12 @@ private void ajustarAlturasTablas() {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mnlComenzarBingo;
+    private javax.swing.JMenuItem mnlGenerarCartones;
+    private javax.swing.JMenuItem mnlInstrucciones;
+    private javax.swing.JMenuItem mnlNuevoJuego;
+    private javax.swing.JMenuItem mnlSalir;
+    private javax.swing.JMenuItem mnlVenderCartones;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
@@ -820,10 +865,6 @@ private void ajustarAlturasTablas() {
     private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JSeparator jSeparator5;
     public javax.swing.JLabel lblBolitaTitulo;
-    private javax.swing.JMenuItem mnlComenzarBingo;
-    private javax.swing.JMenuItem mnlGenerarCartones;
-    private javax.swing.JMenuItem mnlNuevoJuego;
-    private javax.swing.JMenuItem mnlVenderCartones;
     public javax.swing.JTable tblCarton1;
     public javax.swing.JTable tblCarton2;
     public javax.swing.JTable tblCarton3;
