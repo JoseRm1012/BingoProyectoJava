@@ -8,31 +8,45 @@ import clases.Persona;
  *
  * @author QXC
  */
-public class DlgVenderCarton extends javax.swing.JDialog {
-        private boolean aceptado = false;
 
-    /**
-     * Creates new form DlgVenderCarton
-     */
+
+/**
+ * Se cre un JDiálog para registrar la venta de un cartón de bingo.
+ * Permite seleccionar el número de cartón y los datos del cliente.
+ */
+
+public class DlgVenderCarton extends javax.swing.JDialog {
+      private boolean aceptado = false;
+
+    
     public DlgVenderCarton(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-     // 👉 NUEVO: constructor que usa el Controlador (con maxCartones)
+     
+     /**
+     * Crea un nuevo diálogo de venta de cartón inicializando el combo
+     * de número de cartón con la cantidad disponible.
+     *
+     * @param parent      Ventana padre sobre la que se muestra el diálogo.
+     * @param modal       Indica si el diálogo será modal.
+     * @param maxCartones Número máximo de cartones disponibles para la venta.
+     *                    Se usa para llenar el combo de selección de cartón.
+     */
+    
     public DlgVenderCarton(java.awt.Frame parent, boolean modal, int maxCartones) {
         this(parent, modal);           // llama al otro constructor
-        // llenar el combo de N° Carton con 1..maxCartones
         cboNumeroCarton.removeAllItems();
         for (int i = 1; i <= maxCartones; i++) {
             cboNumeroCarton.addItem(String.valueOf(i));
         }
     }
-    // ========= MÉTODOS QUE USA EL CONTROLADOR =========
+     
 
     public boolean isAceptado() {
         return aceptado;
     }
-
+    //Se llena de acuerdo a la informacion del cliente al que se le vendio el numero.
     public Persona getPersona() {
         if (!aceptado) {
             return null;

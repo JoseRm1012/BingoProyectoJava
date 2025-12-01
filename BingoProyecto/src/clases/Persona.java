@@ -5,7 +5,8 @@
 package clases;
 
 /**
- *
+ * Se crea la clase Persona con sus atributos, constructores lleno y vacio 
+ * y sus respectivos setter and getter
  * @author QXC
  */
 public class Persona {

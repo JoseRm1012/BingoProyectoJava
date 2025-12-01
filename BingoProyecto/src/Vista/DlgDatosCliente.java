@@ -9,6 +9,11 @@ import clases.Persona;
  *
  * @author QXC
  */
+
+/**
+ * Diálogo que muestra los datos del cliente que compró un cartón.
+ * Se utiliza como ventana modal desde la vista principal del juego.
+ */
 public class DlgDatosCliente extends javax.swing.JDialog {
 
     /**
@@ -17,12 +22,11 @@ public class DlgDatosCliente extends javax.swing.JDialog {
     public DlgDatosCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        // Campos solo lectura
         txtNombreUsuario.setEditable(false);
         txtApellidoUsuario.setEditable(false);
         txtCedulaUsuario.setEditable(false);
     }
-    // 👉 Rellenar los datos del cliente
+    // Rellena los datos del cliente
     public void setDatosCliente(Persona p) {
         if (p == null) {
             txtNombreUsuario.setText("");

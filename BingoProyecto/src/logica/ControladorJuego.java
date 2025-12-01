@@ -17,22 +17,36 @@ import javax.swing.table.DefaultTableModel;
 import Vista.DlgVenderCarton;
 import clases.Persona;
 
+/**
+ * Controla la lógica principal del juego de bingo.
+ * Se encarga de manejar la vista, los cartones, la tómbola y las personas.
+ */
 public class ControladorJuego {
 
     private final VistaPrincipall vista;
+    //Array de los cartones que se usan en el juego
     private final ArrayList<Carton> cartones = new ArrayList<>();
+    //Generara las bolitas 
     private final Tombola tombola = new Tombola();
     private boolean juegoEnCurso = false;
     private long inicioJuegoMs;
+    //Array de las personas que se registro que realizaron la compra 
     private final ArrayList<Persona> personas = new ArrayList<>();
+    
+    // Premios posibles para el ganador
+    private final String[] premios = {
+    "Pantalla de 72 pulgadas",
+    "Una refrigeradora",
+    "Un iPhone"
+    };
 
     public ControladorJuego(VistaPrincipall vista) {
         this.vista = vista;
     }
     
-    // ========= VENDER CARTÓN =========
-public void venderCarton() {
-    if (cartones.isEmpty()) {
+    //Metodo para vender los cartones
+    public void venderCarton() {
+        if (cartones.isEmpty()) {
         JOptionPane.showMessageDialog(vista, "Primero genere los cartones.");
         return;
     }
@@ -68,8 +82,8 @@ public void venderCarton() {
     personas.add(p);
     marcarCartonComoVendido(num);
 }
-// ========= MOSTRAR DATOS DEL CLIENTE =========
-public void mostrarDatosCliente(int numCarton) {
+    // Metodo para mostrar datos de los clientes que se registro
+    public void mostrarDatosCliente(int numCarton) {
     if (cartones.isEmpty()) {
         JOptionPane.showMessageDialog(vista, "Primero genere y venda cartones.");
         return;
@@ -89,12 +103,12 @@ public void mostrarDatosCliente(int numCarton) {
     }
 
     DlgDatosCliente dlg = new DlgDatosCliente(vista, true);
-    dlg.setDatosCliente(comprador);   // 👈 solo pasa la persona
+    dlg.setDatosCliente(comprador);   
     dlg.setVisible(true);
 }
-
-private void marcarCartonComoVendido(int num) {
-    switch (num) {
+    //Luego de haber seleccionado los cartones se marcara como vendidos en cada carton
+    private void marcarCartonComoVendido(int num) {
+        switch (num) {
         case 1 -> vista.txtEstado1.setText("VENDIDO");
         case 2 -> vista.txtEstado2.setText("VENDIDO");
         case 3 -> vista.txtEstado3.setText("VENDIDO");
@@ -103,7 +117,12 @@ private void marcarCartonComoVendido(int num) {
     }
 }
 
-    // ========= NUEVO JUEGO =========
+    /**
+     * Inicia un nuevo juego de bingo.
+     * Limpia cartones, números jugados, reinicia la tómbola
+     * y pone todos los estados de los cartones como "DISPONIBLE".
+     */
+    
     public void nuevoJuego() {
         juegoEnCurso = false;
         cartones.clear();
@@ -121,7 +140,10 @@ private void marcarCartonComoVendido(int num) {
         vista.lblBolitaTitulo.setText("Bolita N°");
     }
 
-    // ========= GENERAR CARTONES =========
+     /**
+     * Genera los 5 cartones de bingo si aún no existen.
+     * Muestra un mensaje si ya fueron generados antes.
+     */
     public void generarCartones() {
         if (!cartones.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Los cartones ya fueron generados.");
@@ -134,12 +156,16 @@ private void marcarCartonComoVendido(int num) {
             cartones.add(c);
 
             JTable tabla = obtenerTablaCarton(i);
-            configurarRendererCarton(tabla, c);   // 👈 renderer para colorear
+            configurarRendererCarton(tabla, c);  
             llenarTablaCarton(tabla, c.getNumeros());
         }
     }
-
-    // ========= COMENZAR BINGO =========
+    
+    /**
+     * Comienza el juego de bingo.
+     * Si no hay cartones generados, muestra un mensaje.
+     */
+    
     public void comenzarBingo() {
         if (cartones.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Primero genere los cartones.");
@@ -149,7 +175,13 @@ private void marcarCartonComoVendido(int num) {
         inicioJuegoMs = System.currentTimeMillis();
     }
 
-    // ========= NUEVA BOLITA =========
+    /**
+     * Saca una nueva bolita de la tómbola y actualiza el juego.
+     * Verifica que el bingo haya comenzado, muestra la bolita en la vista,
+     * la agrega a la tabla de números jugados, marca el número en los cartones
+     * y revisa si hay algún cartón ganador.
+     */
+    
     public void nuevaBolita() {
         if (!juegoEnCurso) {
             JOptionPane.showMessageDialog(vista, "Debe comenzar el bingo primero.");
@@ -173,9 +205,9 @@ private void marcarCartonComoVendido(int num) {
 
         // Marcar en cartones y revisar ganador
         for (Carton c : cartones) {
-            c.marcarNumero(n);  // se actualiza la matriz marcados
+            c.marcarNumero(n);  // se actualiza la matriz 
 
-            // repintar la tabla correspondiente para que se vea el color
+            
             JTable tabla = obtenerTablaCarton(c.getIdCarton());
             if (tabla != null) {
                 tabla.repaint();
@@ -190,8 +222,8 @@ private void marcarCartonComoVendido(int num) {
         }
     }
 
-    // ========= MÉTODOS PRIVADOS DE APOYO =========
-
+    
+    //Va obtener la tabla de cada carton
     private JTable obtenerTablaCarton(int num) {
         return switch (num) {
             case 1 -> vista.tblCarton1;
@@ -203,7 +235,12 @@ private void marcarCartonComoVendido(int num) {
         };
     }
 
-    // --- RENDERER PARA COLOREAR CASILLAS MARCADAS ---
+    
+    /**
+     * Configura la tabla para que pinte en color
+     * las casillas marcadas del cartón.
+     *
+     */
     private void configurarRendererCarton(JTable tabla, Carton carton) {
         tabla.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
@@ -221,17 +258,21 @@ private void marcarCartonComoVendido(int num) {
                 // fondo por defecto
                 comp.setBackground(Color.WHITE);
 
-                // si la casilla está marcada en el cartón -> color
+                // si la casilla está marcada en el cartón se pintara de amarillo
                 if (carton.isMarcado(row, column)) {
-                    comp.setBackground(Color.YELLOW); // o Color.RED
+                    comp.setBackground(Color.YELLOW); 
                 }
 
                 return comp;
             }
         });
     }
-
-    // limpia las 5 tablas de cartones dejándolas 5x5 vacías
+    
+    /**
+    *   Limpia las 5 tablas de cartones dejándolas 5x5 vacías
+    *
+    */
+   
     private void limpiarTablasCartones() {
         limpiarTablaCarton(vista.tblCarton1);
         limpiarTablaCarton(vista.tblCarton2);
@@ -240,6 +281,11 @@ private void marcarCartonComoVendido(int num) {
         limpiarTablaCarton(vista.tblCarton5);
     }
 
+    
+    /**
+     * Limpia una tabla de cartón, dejando todas las celdas vacías.
+     *
+     */
     private void limpiarTablaCarton(JTable tabla) {
         DefaultTableModel m = (DefaultTableModel) tabla.getModel();
         int filas = m.getRowCount();
@@ -251,7 +297,11 @@ private void marcarCartonComoVendido(int num) {
         }
     }
 
-    // llena el cartón con los números generados (5x5) ocupando todo el JTable
+      /**
+     * Llena una tabla con los números de un cartón (matriz 5x5)
+     * y ajusta la altura de las filas.
+     *
+     */
     private void llenarTablaCarton(JTable tabla, int[][] datos) {
         DefaultTableModel m = (DefaultTableModel) tabla.getModel();
 
@@ -263,8 +313,7 @@ private void marcarCartonComoVendido(int num) {
             }
         }
 
-        // Ajustar la altura de fila para que las 5 filas llenen el alto del viewport
-        java.awt.Component parent = tabla.getParent(); // normalmente el JViewport
+        java.awt.Component parent = tabla.getParent(); 
         int alto = parent.getHeight();
         int filas = m.getRowCount();
         if (alto > 0 && filas > 0) {
@@ -276,8 +325,11 @@ private void marcarCartonComoVendido(int num) {
         tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tabla.getTableHeader().setReorderingAllowed(false);
     }
-
-    // deja vacía toda la grilla de NÚMEROS JUGADOS (5 x 15)
+    
+     /**
+     * Limpia la tabla de números jugados, dejando todas las celdas vacías.
+     */
+   
     private void limpiarTablaNumerosJugados() {
         DefaultTableModel m = (DefaultTableModel) vista.tblNumerosJugadoss.getModel();
         int filas = m.getRowCount();   // 15
@@ -301,23 +353,33 @@ private void marcarCartonComoVendido(int num) {
                 Object val = m.getValueAt(f, c);
                 if (val == null || val.toString().trim().isEmpty()) {
                     m.setValueAt(n, f, c);
-                    return; // ya lo pusimos
+                    return;
                 }
             }
         }
-        // Si se llenó la tabla completa, no agrega más
+       
     }
 
+    
+    /**
+     * Muestra un mensaje con la información del cartón ganador con el tipo de juagada y la duracion.
+     * 
+     */
     private void mostrarGanador(Carton carton, long duracionSegundos) {
+     // Se otogara premio al ganador
+    int indice = (int) (Math.random() * premios.length);
+    String premio = premios[indice];
         String mensaje = """
                          ¡BINGO!
                          Cartón ganador: %d
                          Tipo de jugada: %s
                          Tiempo de juego: %d segundos
+                         Premio: %s
                          """.formatted(
                 carton.getIdCarton(),
                 carton.getTipoJugada(),
-                duracionSegundos
+                duracionSegundos,
+                premio
         );
         JOptionPane.showMessageDialog(vista, mensaje);
     }

@@ -10,21 +10,26 @@ import java.time.LocalDateTime;
  *
  * @author QXC
  */
+
+//Se crea la clase ganador 
 public class Ganador {
      private Persona persona;
     private int numeroCarton;
-    private String tipoJugada;     // fila, columna, diagonal, esquinas
+    private String tipoJugada;     
     private LocalDateTime fechaHora;
 
+    
+    //Constructores vacio y lleno
     public Ganador(Persona persona, int numeroCarton, String tipoJugada, LocalDateTime fechaHora) {
         this.persona = persona;
         this.numeroCarton = numeroCarton;
         this.tipoJugada = tipoJugada;
         this.fechaHora = fechaHora;
     }
-
+    
     public Ganador() {
     }
+    //Setter and Getter
 
     public Persona getPersona() {
         return persona; 

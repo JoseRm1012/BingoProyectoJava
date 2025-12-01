@@ -12,14 +12,21 @@ import clases.Persona;
  *
  * @author QXC
  */
-public class Carton  {
+  public class Carton  {
        private final int idCarton;
+    // Números del cartón organizados en una matriz 5x5.
     private final int[][] numeros = new int[5][5];
+    
+    //Indica si el cartón ha resultado ganador
     private final boolean[][] marcados = new boolean[5][5];
     private boolean ganador;
+    
+    // Describe el tipo de jugada ganadora (línea, cartón lleno, etc.)
     private String tipoJugada;
+    //Si la Persona que compró el cartón
     private Persona comprador;
 
+    //Se genera los cartones y mediante los getter va a devolver los identificadores de cada carton
     public Carton(int idCarton) {
         this.idCarton = idCarton;
     }
@@ -53,12 +60,12 @@ public class Carton  {
         return comprador != null;
     }
 
-    // NUEVO: para que el renderer pueda consultar si una casilla está marcada
+    
     public boolean isMarcado(int fila, int col) {
         return marcados[fila][col];
     }
 
-    // ===== GENERAR CARTÓN =====
+    // Se genera los cartones
     public void generarCarton() {
         Random rnd = new Random();
 
@@ -92,7 +99,7 @@ public class Carton  {
         }
     }
 
-    // ===== MARCAR NÚMERO =====
+    // Método para marcar el numero del carton
     public void marcarNumero(int numero) {
         for (int f = 0; f < 5; f++) {
             for (int c = 0; c < 5; c++) {
@@ -103,7 +110,7 @@ public class Carton  {
         }
     }
 
-    // ===== REVISAR SI GANÓ =====
+    // Metodo para revisar si  ya hay un ganador
     public boolean revisarGanador() {
         // Filas
         for (int f = 0; f < 5; f++) {
