@@ -7,12 +7,14 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import clases.Persona;   
+import logica.ControladorJuego;
+
 
 /**
  *
  * @author QXC
  */
-  public class Carton  {
+  public class Carton extends Thread  {
        private final int idCarton;
     // Números del cartón organizados en una matriz 5x5.
     private final int[][] numeros = new int[5][5];
@@ -25,11 +27,21 @@ import clases.Persona;
     private String tipoJugada;
     //Si la Persona que compró el cartón
     private Persona comprador;
+        // --- campos para manejar el hilo ---
+    private final ControladorJuego controlador;
+    private boolean activo = true;
+    private int numeroPendiente;
+    private boolean hayNumero = false;
+
 
     //Se genera los cartones y mediante los getter va a devolver los identificadores de cada carton
-    public Carton(int idCarton) {
+        public Carton(int idCarton, ControladorJuego controlador) {
         this.idCarton = idCarton;
+        this.controlador = controlador;
     }
+
+   
+
 
     public int getIdCarton() {
         return idCarton;
@@ -184,4 +196,57 @@ import clases.Persona;
 
         return false;
     }
+        /**
+     * Envia un nuevo número al cartón y despierta el hilo.
+     */
+    public void recibirNumero(int numero) {
+        synchronized (this) {
+            numeroPendiente = numero;
+            hayNumero = true;
+            notify();
+        }
+    }
+
+    /**
+     * Detiene el hilo del cartón.
+     */
+    public void detener() {
+        activo = false;
+        synchronized (this) {
+            notify();
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            while (activo) {
+                int numero;
+
+                // espera hasta que llegue un nuevo número
+                synchronized (this) {
+                    while (!hayNumero && activo) {
+                        wait();
+                    }
+                    if (!activo) {
+                        break;
+                    }
+                    numero = numeroPendiente;
+                    hayNumero = false;
+                }
+
+                // marcar el número
+                marcarNumero(numero);
+
+                // revisar si este cartón ganó
+                if (revisarGanador()) {
+                    controlador.cartonGano(this);
+                    activo = false;
+                }
+            }
+        } catch (InterruptedException e) {
+            // hilo terminado
+        }
+    }
+
 }

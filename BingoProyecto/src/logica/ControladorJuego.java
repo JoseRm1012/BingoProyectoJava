@@ -4,6 +4,7 @@
  */
 package logica;
 import Vista.DlgDatosCliente;
+import Vista.DlgHistorial;
 import Vista.VistaPrincipall;
 import clases.Carton;
 import clases.Tombola;
@@ -17,11 +18,16 @@ import javax.swing.table.DefaultTableModel;
 import Vista.DlgVenderCarton;
 import clases.Persona;
 
+
+
+
 /**
  * Controla la lógica principal del juego de bingo.
  * Se encarga de manejar la vista, los cartones, la tómbola y las personas.
  */
 public class ControladorJuego {
+    private String ultimoHistorial;  // texto del último ganador
+
 
     private final VistaPrincipall vista;
     //Array de los cartones que se usan en el juego
@@ -32,6 +38,10 @@ public class ControladorJuego {
     private long inicioJuegoMs;
     //Array de las personas que se registro que realizaron la compra 
     private final ArrayList<Persona> personas = new ArrayList<>();
+    private Persona ultimoGanadorPersona;
+private int ultimoGanadorCarton;
+private String ultimoGanadorJugada;
+private long ultimoGanadorTiempo;
     
     // Premios posibles para el ganador
     private final String[] premios = {
@@ -124,42 +134,52 @@ public class ControladorJuego {
      */
     
     public void nuevoJuego() {
-        juegoEnCurso = false;
-        cartones.clear();
-        tombola.inicializar();
+    juegoEnCurso = false;
 
-        limpiarTablasCartones();
-        limpiarTablaNumerosJugados();
-
-        vista.txtEstado1.setText("DISPONIBLE");
-        vista.txtEstado2.setText("DISPONIBLE");
-        vista.txtEstado3.setText("DISPONIBLE");
-        vista.txtEstado4.setText("DISPONIBLE");
-        vista.txtEstado5.setText("DISPONIBLE");
-
-        vista.lblBolitaTitulo.setText("Bolita N°");
+    // detener hilos de cartones
+    for (Carton c : cartones) {
+        c.detener();
     }
+    cartones.clear();
+
+    tombola.inicializar();
+
+    limpiarTablasCartones();
+    limpiarTablaNumerosJugados();
+
+    vista.txtEstado1.setText("DISPONIBLE");
+    vista.txtEstado2.setText("DISPONIBLE");
+    vista.txtEstado3.setText("DISPONIBLE");
+    vista.txtEstado4.setText("DISPONIBLE");
+    vista.txtEstado5.setText("DISPONIBLE");
+
+    vista.lblBolitaTitulo.setText("Bolita N°");
+}
+
 
      /**
      * Genera los 5 cartones de bingo si aún no existen.
      * Muestra un mensaje si ya fueron generados antes.
      */
     public void generarCartones() {
-        if (!cartones.isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "Los cartones ya fueron generados.");
-            return;
-        }
-
-        for (int i = 1; i <= 5; i++) {
-            Carton c = new Carton(i);
-            c.generarCarton();
-            cartones.add(c);
-
-            JTable tabla = obtenerTablaCarton(i);
-            configurarRendererCarton(tabla, c);  
-            llenarTablaCarton(tabla, c.getNumeros());
-        }
+    if (!cartones.isEmpty()) {
+        JOptionPane.showMessageDialog(vista, "Los cartones ya fueron generados.");
+        return;
     }
+
+    for (int i = 1; i <= 5; i++) {
+        Carton c = new Carton(i, this);  
+        c.generarCarton();
+        cartones.add(c);
+
+        JTable tabla = obtenerTablaCarton(i);
+        configurarRendererCarton(tabla, c);
+        llenarTablaCarton(tabla, c.getNumeros());
+
+        c.start(); // arranca el hilo del cartón
+    }
+}
+
     
     /**
      * Comienza el juego de bingo.
@@ -182,45 +202,40 @@ public class ControladorJuego {
      * y revisa si hay algún cartón ganador.
      */
     
-    public void nuevaBolita() {
-        if (!juegoEnCurso) {
-            JOptionPane.showMessageDialog(vista, "Debe comenzar el bingo primero.");
-            return;
-        }
+   public void nuevaBolita() {
+    if (!juegoEnCurso) {
+        JOptionPane.showMessageDialog(vista, "Debe comenzar el bingo primero.");
+        return;
+    }
 
-        if (!tombola.hayMasBolitas()) {
-            JOptionPane.showMessageDialog(vista, "Ya no hay más bolitas.");
-            juegoEnCurso = false;
-            return;
-        }
+    if (!tombola.hayMasBolitas()) {
+        JOptionPane.showMessageDialog(vista, "Ya no hay más bolitas.");
+        juegoEnCurso = false;
+        return;
+    }
 
-        int n = tombola.siguienteBolita();
-        if (n == -1) return;
+    int n = tombola.siguienteBolita();
+    if (n == -1) return;
 
-        // Mostrar bolita en el label
-        vista.lblBolitaTitulo.setText("Bolita N° " + n);
+    // Mostrar bolita en el label
+    vista.lblBolitaTitulo.setText("Bolita N° " + n);
 
-        // Registrar en la tabla de números jugados
-        agregarNumeroJugado(n);
+    // Registrar en la tabla de números jugados
+    agregarNumeroJugado(n);
 
-        // Marcar en cartones y revisar ganador
-        for (Carton c : cartones) {
-            c.marcarNumero(n);  // se actualiza la matriz 
+    // Enviar número a cada cartón (hilo) y repintar la tabla
+    for (Carton c : cartones) {
+        c.recibirNumero(n);
 
-            
-            JTable tabla = obtenerTablaCarton(c.getIdCarton());
-            if (tabla != null) {
-                tabla.repaint();
-            }
-
-            if (c.revisarGanador()) {
-                juegoEnCurso = false;
-                long duracionSeg = (System.currentTimeMillis() - inicioJuegoMs) / 1000;
-                mostrarGanador(c, duracionSeg);
-                break;
-            }
+        JTable tabla = obtenerTablaCarton(c.getIdCarton());
+        if (tabla != null) {
+            tabla.repaint();
         }
     }
+    
+}
+
+    
 
     
     //Va obtener la tabla de cada carton
@@ -260,7 +275,7 @@ public class ControladorJuego {
 
                 // si la casilla está marcada en el cartón se pintara de amarillo
                 if (carton.isMarcado(row, column)) {
-                    comp.setBackground(Color.YELLOW); 
+                    comp.setBackground(Color.RED); 
                 }
 
                 return comp;
@@ -366,21 +381,87 @@ public class ControladorJuego {
      * 
      */
     private void mostrarGanador(Carton carton, long duracionSegundos) {
-     // Se otogara premio al ganador
-    int indice = (int) (Math.random() * premios.length);
-    String premio = premios[indice];
-        String mensaje = """
-                         ¡BINGO!
-                         Cartón ganador: %d
-                         Tipo de jugada: %s
-                         Tiempo de juego: %d segundos
-                         Premio: %s
-                         """.formatted(
-                carton.getIdCarton(),
-                carton.getTipoJugada(),
-                duracionSegundos,
-                premio
-        );
-        JOptionPane.showMessageDialog(vista, mensaje);
+    Persona p = carton.getComprador();
+
+    String nombre   = (p != null) ? p.getNombre() + " " + p.getApellidos() : "Sin datos";
+    String cedula   = (p != null) ? p.getCedula() : "Sin datos";
+    String telefono = (p != null) ? p.getTelefono() : "Sin datos";
+
+    // texto que se usará para el historial
+    ultimoHistorial = """
+            Cartón ganador: %d
+            Tipo de jugada: %s
+            Tiempo de juego: %d segundos
+            Nombre: %s
+            Cédula: %s
+            Teléfono: %s
+            """.formatted(
+            carton.getIdCarton(),
+            carton.getTipoJugada(),
+            duracionSegundos,
+            nombre,
+            cedula,
+            telefono
+    );
+
+    // mensaje normal al ganar
+    JOptionPane.showMessageDialog(vista, "¡BINGO!\n\n" + ultimoHistorial);
+}
+
+        /**
+     * Método llamado por un cartón cuando gana.
+     */
+    public synchronized void cartonGano(Carton carton) {
+    if (!juegoEnCurso) {
+        return;
     }
+
+    juegoEnCurso = false;
+    long duracionSeg = (System.currentTimeMillis() - inicioJuegoMs) / 1000;
+
+    // GUARDAR LOS DATOS DEL GANADOR (esto faltaba)
+    Persona p = carton.getComprador();
+    ultimoGanadorPersona = p;
+    ultimoGanadorCarton = carton.getIdCarton();
+    ultimoGanadorJugada = carton.getTipoJugada();
+    ultimoGanadorTiempo = duracionSeg;
+
+    // Mostrar mensaje como siempre
+    mostrarGanador(carton, duracionSeg);
+
+    // detener los demás cartones
+    for (Carton c : cartones) {
+        if (c != carton) {
+            c.detener();
+        }
+    }
+}
+
+    public void verHistorial() {
+    if (ultimoGanadorPersona == null) {
+        JOptionPane.showMessageDialog(vista,
+                "Todavía no hay ningún ganador registrado.");
+        return;
+    }
+
+    // Crear el diálogo y pasarle los datos del último ganador
+    DlgHistorial dlg = new DlgHistorial(vista, true);
+
+    String nombreCompleto = ultimoGanadorPersona.getNombre()
+            + " " + ultimoGanadorPersona.getApellidos();
+
+    dlg.setDatos(
+            nombreCompleto,
+            ultimoGanadorPersona.getCedula(),
+            ultimoGanadorPersona.getTelefono(),
+            ultimoGanadorCarton,
+            ultimoGanadorJugada
+            
+            );
+
+    dlg.setVisible(true);
+}
+
+
+
 }
