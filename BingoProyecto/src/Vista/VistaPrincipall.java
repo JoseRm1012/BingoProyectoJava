@@ -33,7 +33,7 @@ public class VistaPrincipall extends javax.swing.JFrame {
         }
         return controlador;
     }
-    private void ajustarAlturasTablas() {
+private void ajustarAlturasTablas() {
         ajustarAlturaCarton(tblCarton1);
         ajustarAlturaCarton(tblCarton2);
         ajustarAlturaCarton(tblCarton3);
@@ -42,10 +42,6 @@ public class VistaPrincipall extends javax.swing.JFrame {
         ajustarAlturaNumerosJugados();
     }
 
-     /**
-     * Ajusta la altura de las filas de todas las tablas de cartones
-     * y de la tabla de números jugados, de acuerdo al alto disponible.
-     */
     private void ajustarAlturaCarton(javax.swing.JTable tabla) {
         int filas = tabla.getRowCount();
         int alto = tabla.getParent().getHeight();
@@ -55,12 +51,6 @@ public class VistaPrincipall extends javax.swing.JFrame {
             tabla.setRowHeight(30);
         }
     }
-    
-     /**
-     * Ajusta la altura de las filas de la tabla de números jugados
-     * según el alto de su contenedor. Si no hay filas o no hay alto
-     * disponible, se usa una altura mínima por defecto
-     */
 
     private void ajustarAlturaNumerosJugados() {
         int filas = tblNumerosJugadoss.getRowCount();
@@ -139,7 +129,8 @@ public class VistaPrincipall extends javax.swing.JFrame {
         mnlVenderCartones = new javax.swing.JMenuItem();
         mnlComenzarBingo = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        mnlSalir = new javax.swing.JMenuItem();
+        mnlInstrucciones = new javax.swing.JMenuItem();
 
         jPanel18.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -658,6 +649,15 @@ public class VistaPrincipall extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Archivo");
+        
+        mnlSalir.setText("Salir");
+        mnlSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnlSalirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnlSalir);
+        
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Tico Bingo");
@@ -697,10 +697,16 @@ public class VistaPrincipall extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Ayuda");
+        
+        mnlInstrucciones.setText("Instrucciones");
+        mnlInstrucciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnlInstruccionesActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnlInstrucciones);
+        
         jMenuBar1.add(jMenu3);
-
-        jMenu4.setText("Ver Historial");
-        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
@@ -726,120 +732,68 @@ public class VistaPrincipall extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Maneja el clic en el botón "Nuevo juego".
-     * Inicia un nuevo juego de bingo a través del controlador.
-     */
-    
     private void btnNuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoJuegoActionPerformed
         controlador.nuevoJuego();
     }//GEN-LAST:event_btnNuevoJuegoActionPerformed
 
-    
-     /**
-     * Maneja el clic en el botón "Generar cartones".
-     * Solicita al controlador la generación de los cartones de bingo.
-     */
     private void btnGenerarCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarCartonesActionPerformed
          controlador.generarCartones();
     }//GEN-LAST:event_btnGenerarCartonesActionPerformed
-    
-    
-     /**
-     * Maneja el clic en el botón "Vender cartones".
-     * Delegada la venta de un cartón al controlador.
-     */
+
     private void btnVenderCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderCartonesActionPerformed
         controlador.venderCarton();
     }//GEN-LAST:event_btnVenderCartonesActionPerformed
 
-    /* * Maneja el clic en el botón "Comenzar juego".
-     * Indica al controlador que inicie el sorteo de bingo.
-     */
     private void btnComenzarJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComenzarJuegoActionPerformed
        controlador.comenzarBingo();;
+       
     }//GEN-LAST:event_btnComenzarJuegoActionPerformed
 
-    /**
-     * Maneja el clic en el botón "Nueva bolita".
-     * Solicita al controlador que extraiga una nueva bolita de la tómbola.
-     *
-     */
     private void btnNuevaBolita2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaBolita2ActionPerformed
         controlador.nuevaBolita();
     }//GEN-LAST:event_btnNuevaBolita2ActionPerformed
-    
-    /**
-     * Maneja la opción de menú "Nuevo juego".
-     * Dispara la misma acción que el botón "Nuevo juego".
-     */
+
     private void mnlNuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlNuevoJuegoActionPerformed
         btnNuevoJuego.doClick();
     }//GEN-LAST:event_mnlNuevoJuegoActionPerformed
-    
-    
-    /**
-     * Maneja la opción de menú "Vender cartones".
-     * Dispara la acción del botón correspondiente y solicita la venta al controlador.
-     */
+
     private void mnlVenderCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlVenderCartonesActionPerformed
           btnVenderCartones.doClick();
           controlador.venderCarton();
     }//GEN-LAST:event_mnlVenderCartonesActionPerformed
-    /**
-     * Maneja la opción de menú "Generar cartones"
-     * Dispara la acción del botón correspondiente y solicita la venta al controlador.
-     */
+
     private void mnlGenerarCartonesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlGenerarCartonesActionPerformed
        btnGenerarCartones.doClick();
     }//GEN-LAST:event_mnlGenerarCartonesActionPerformed
-    /**
-     * Maneja la opción de menú "Comenzar Bingo".
-     * Dispara la acción del botón correspondiente y solicita la venta al controlador.
-     */
+
     private void mnlComenzarBingoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlComenzarBingoActionPerformed
          btnComenzarJuego.doClick();
     }//GEN-LAST:event_mnlComenzarBingoActionPerformed
-    
-     /**
-     * Muestra los datos del cliente asociado al primer cartón.
-     */
+
     private void btnDatosCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente1ActionPerformed
         controlador.mostrarDatosCliente(1);
     }//GEN-LAST:event_btnDatosCliente1ActionPerformed
-     
-    /**
-     * Muestra los datos del cliente asociado al tercer  cartón.
-     */
+
     private void btnDatosCliente3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente3ActionPerformed
         controlador.mostrarDatosCliente(2);
     }//GEN-LAST:event_btnDatosCliente3ActionPerformed
-    /**
-     * Muestra los datos del cliente asociado al tercer cartón.
-     */
+
     private void btnDatosCliente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente2ActionPerformed
         controlador.mostrarDatosCliente(3);
     }//GEN-LAST:event_btnDatosCliente2ActionPerformed
-    /**
-     * Muestra los datos del cliente asociado al cuarto cartón.
-     */
+
     private void btnDatosCliente4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente4ActionPerformed
         controlador.mostrarDatosCliente(4);
     }//GEN-LAST:event_btnDatosCliente4ActionPerformed
-    /**
-     * Muestra los datos del cliente asociado al quinto  cartón.
-     */
+
     private void btnDatosCliente5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosCliente5ActionPerformed
         controlador.mostrarDatosCliente(5);
     }//GEN-LAST:event_btnDatosCliente5ActionPerformed
-    /**
-     * Muestra la opcion de salir.
-     */
+
     private void mnlSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_mnlSalirActionPerformed
-    
-    //Se crea intsruciones para que el usuario comprenda de que trata el juego mediante un JOptionPane
+
     private void mnlInstruccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlInstruccionesActionPerformed
         javax.swing.JOptionPane.showMessageDialog(this,
             "INSTRUCCIONES DEL JUEGO TICO BINGO\n\n" +
@@ -887,8 +841,13 @@ public class VistaPrincipall extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mnlComenzarBingo;
+    private javax.swing.JMenuItem mnlGenerarCartones;
+    private javax.swing.JMenuItem mnlInstrucciones;
+    private javax.swing.JMenuItem mnlNuevoJuego;
+    private javax.swing.JMenuItem mnlSalir;
+    private javax.swing.JMenuItem mnlVenderCartones;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
@@ -906,10 +865,6 @@ public class VistaPrincipall extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane19;
     private javax.swing.JSeparator jSeparator5;
     public javax.swing.JLabel lblBolitaTitulo;
-    private javax.swing.JMenuItem mnlComenzarBingo;
-    private javax.swing.JMenuItem mnlGenerarCartones;
-    private javax.swing.JMenuItem mnlNuevoJuego;
-    private javax.swing.JMenuItem mnlVenderCartones;
     public javax.swing.JTable tblCarton1;
     public javax.swing.JTable tblCarton2;
     public javax.swing.JTable tblCarton3;
