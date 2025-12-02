@@ -1,18 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package clases;
 
 import java.time.LocalDateTime;
 
 /**
- *
- * @author QXC
+ * Clase  del jugador que ganó una partida
+ * persona, número de cartón, tipo de jugada, premio etc.
  */
 
-//Se crea la clase ganador 
+
 public class Ganador {
+    //Atributos
      private Persona persona;
     private int numeroCarton;
     private String tipoJugada;     

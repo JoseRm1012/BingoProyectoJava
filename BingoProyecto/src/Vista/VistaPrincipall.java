@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Vista;
 import clases.Carton;
 import clases.Ganador;
@@ -11,6 +8,10 @@ import logica.ControladorJuego;
 /**
  *
  * @author QXC
+ */
+
+/**
+ * Vista principal del juego del bingo con botones,labels, imagenes
  */
 public class VistaPrincipall extends javax.swing.JFrame {
        
@@ -34,7 +35,13 @@ public class VistaPrincipall extends javax.swing.JFrame {
         }
         return controlador;
     }
-private void ajustarAlturasTablas() {
+    
+    /**
+     * Ajusta la altura de todas las tablas del formulario para que
+     * las filas ocupen el espacio disponible para que se vea de forma ordenada.
+     */
+    
+    private void ajustarAlturasTablas() {
         ajustarAlturaCarton(tblCarton1);
         ajustarAlturaCarton(tblCarton2);
         ajustarAlturaCarton(tblCarton3);
@@ -43,6 +50,10 @@ private void ajustarAlturasTablas() {
         ajustarAlturaNumerosJugados();
     }
 
+    
+    /**
+     * Ajusta la altura de las filas de un carton.
+     */
     private void ajustarAlturaCarton(javax.swing.JTable tabla) {
         int filas = tabla.getRowCount();
         int alto = tabla.getParent().getHeight();
@@ -52,6 +63,10 @@ private void ajustarAlturasTablas() {
             tabla.setRowHeight(30);
         }
     }
+    
+    /**
+     * Ajusta los numeros en el carton.
+     */
 
     private void ajustarAlturaNumerosJugados() {
         int filas = tblNumerosJugadoss.getRowCount();
@@ -752,6 +767,8 @@ private void ajustarAlturasTablas() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    // Respectivos botones del juego 
     private void btnNuevoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoJuegoActionPerformed
         controlador.nuevoJuego();
     }//GEN-LAST:event_btnNuevoJuegoActionPerformed
@@ -801,7 +818,7 @@ private void ajustarAlturasTablas() {
     }//GEN-LAST:event_mnlInstruccionesActionPerformed
 
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
-controlador.verHistorial();
+    controlador.verHistorial();
     }//GEN-LAST:event_jMenu4ActionPerformed
 
     private void mnlComenzarBingoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnlComenzarBingoActionPerformed
@@ -824,7 +841,11 @@ controlador.verHistorial();
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
-
+  
+    
+    /**
+     * Método que mostrara las intrsucciones del Juego del bingo
+     */
     private void btnInstruccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInstruccionesActionPerformed
         javax.swing.JOptionPane.showMessageDialog(this,
             "INSTRUCCIONES DEL JUEGO TICO BINGO\n\n" +
@@ -840,6 +861,10 @@ controlador.verHistorial();
             javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnInstruccionesActionPerformed
 
+    
+    /**
+     *Método del historial del ultimo ganador
+     */
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
                controlador.verHistorial();
 

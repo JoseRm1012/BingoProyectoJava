@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package logica;
 import Vista.DlgDatosCliente;
 import Vista.DlgHistorial;
@@ -39,9 +36,9 @@ public class ControladorJuego {
     //Array de las personas que se registro que realizaron la compra 
     private final ArrayList<Persona> personas = new ArrayList<>();
     private Persona ultimoGanadorPersona;
-private int ultimoGanadorCarton;
-private String ultimoGanadorJugada;
-private long ultimoGanadorTiempo;
+    private int ultimoGanadorCarton;
+    private String ultimoGanadorJugada;
+    private long ultimoGanadorTiempo;
     
     // Premios posibles para el ganador
     private final String[] premios = {
@@ -387,7 +384,7 @@ private long ultimoGanadorTiempo;
     String cedula   = (p != null) ? p.getCedula() : "Sin datos";
     String telefono = (p != null) ? p.getTelefono() : "Sin datos";
 
-    // texto que se usará para el historial
+   
     ultimoHistorial = """
             Cartón ganador: %d
             Tipo de jugada: %s
@@ -419,14 +416,14 @@ private long ultimoGanadorTiempo;
     juegoEnCurso = false;
     long duracionSeg = (System.currentTimeMillis() - inicioJuegoMs) / 1000;
 
-    // GUARDAR LOS DATOS DEL GANADOR (esto faltaba)
+    // Guarda los datos del ganador
     Persona p = carton.getComprador();
     ultimoGanadorPersona = p;
     ultimoGanadorCarton = carton.getIdCarton();
     ultimoGanadorJugada = carton.getTipoJugada();
     ultimoGanadorTiempo = duracionSeg;
 
-    // Mostrar mensaje como siempre
+    
     mostrarGanador(carton, duracionSeg);
 
     // detener los demás cartones

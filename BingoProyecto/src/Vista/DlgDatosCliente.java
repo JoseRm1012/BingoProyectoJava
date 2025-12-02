@@ -72,7 +72,7 @@ public class DlgDatosCliente extends javax.swing.JDialog {
         jLabel3.setText("Cedula");
 
         btnCerrar.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        btnCerrar.setText("<-- Volver");
+        btnCerrar.setText(" Volver");
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCerrarActionPerformed(evt);

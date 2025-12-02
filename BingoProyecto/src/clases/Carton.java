@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package clases;
 import java.util.HashSet;
 import java.util.Random;
@@ -14,6 +11,12 @@ import logica.ControladorJuego;
  *
  * @author QXC
  */
+
+/**
+ * Se sacara cada  cartón de bingo de 5x5  mediante un hilo.
+ * Cada cartón espera los números que salen en la tómbola, los marca
+ * y verifica si obtiene una jugada ganadora
+ */
   public class Carton extends Thread  {
        private final int idCarton;
     // Números del cartón organizados en una matriz 5x5.
@@ -23,25 +26,25 @@ import logica.ControladorJuego;
     private final boolean[][] marcados = new boolean[5][5];
     private boolean ganador;
     
-    // Describe el tipo de jugada ganadora (línea, cartón lleno, etc.)
+    // Describe el tipo de jugada ganadora.
     private String tipoJugada;
     //Si la Persona que compró el cartón
     private Persona comprador;
-        // --- campos para manejar el hilo ---
+    //Maneja el juego mediante el hilo
     private final ControladorJuego controlador;
     private boolean activo = true;
     private int numeroPendiente;
     private boolean hayNumero = false;
 
 
-    //Se genera los cartones y mediante los getter va a devolver los identificadores de cada carton
+    //Cosntructor de la clase carton
         public Carton(int idCarton, ControladorJuego controlador) {
         this.idCarton = idCarton;
         this.controlador = controlador;
     }
 
    
-
+    //Getter and Setter
 
     public int getIdCarton() {
         return idCarton;
@@ -59,7 +62,7 @@ import logica.ControladorJuego;
         return tipoJugada;
     }
     
-      // getters/setters del comprador
+      // getters y setters del cliente
     public Persona getComprador() {
         return comprador;
     }
@@ -76,8 +79,12 @@ import logica.ControladorJuego;
     public boolean isMarcado(int fila, int col) {
         return marcados[fila][col];
     }
-
-    // Se genera los cartones
+    
+     /**
+     * Se va a  generar los números del cartón 
+     * cada columna usara un rango diferente 
+     */
+   
     public void generarCarton() {
         Random rnd = new Random();
 
@@ -97,7 +104,7 @@ import logica.ControladorJuego;
             for (int fila = 0; fila < 5; fila++) {
                 if (fila == 2 && col == 2) { // casilla libre
                     numeros[fila][col] = 0;
-                    marcados[fila][col] = true; // libre ya marcada
+                    marcados[fila][col] = true; 
                     continue;
                 }
                 int n;
@@ -111,7 +118,10 @@ import logica.ControladorJuego;
         }
     }
 
-    // Método para marcar el numero del carton
+    /**
+     * Método que marca el número en el cartón si existe dentro del carton del bingo 5x5.
+     *
+     */
     public void marcarNumero(int numero) {
         for (int f = 0; f < 5; f++) {
             for (int c = 0; c < 5; c++) {
@@ -122,7 +132,10 @@ import logica.ControladorJuego;
         }
     }
 
-    // Metodo para revisar si  ya hay un ganador
+    /**
+     * Método para revisar si ya existe un ganador en el juego
+     *
+     */
     public boolean revisarGanador() {
         // Filas
         for (int f = 0; f < 5; f++) {
@@ -196,7 +209,8 @@ import logica.ControladorJuego;
 
         return false;
     }
-        /**
+    
+     /**
      * Envia un nuevo número al cartón y despierta el hilo.
      */
     public void recibirNumero(int numero) {
@@ -208,7 +222,7 @@ import logica.ControladorJuego;
     }
 
     /**
-     * Detiene el hilo del cartón.
+     *  Va a detener el hilo del cartón.
      */
     public void detener() {
         activo = false;
@@ -223,7 +237,7 @@ import logica.ControladorJuego;
             while (activo) {
                 int numero;
 
-                // espera hasta que llegue un nuevo número
+                // Se crea un hilo de espera hasta que llegue un nuevo número
                 synchronized (this) {
                     while (!hayNumero && activo) {
                         wait();
@@ -245,7 +259,7 @@ import logica.ControladorJuego;
                 }
             }
         } catch (InterruptedException e) {
-            // hilo terminado
+            
         }
     }
 
